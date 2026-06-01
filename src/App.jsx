@@ -1167,7 +1167,11 @@ function App() {
             {menuOpen ? <X /> : <Menu />}
           </button>
           <div className="min-w-0 px-3">
-            <p className="truncate text-sm font-black text-slate-950 md:text-base">RUANG BELAJAR PAK LA ODE</p>
+            <div className="max-w-[78vw] overflow-hidden sm:max-w-[58vw] lg:max-w-[46vw] xl:max-w-[54vw]">
+              <p className="marquee-welcome whitespace-nowrap text-sm font-black text-slate-950 md:text-base">
+                Selamat datang di ruang belajar digital Pak Guru La Ode
+              </p>
+            </div>
             <p className="truncate text-xs font-bold text-slate-500">Portal Pembelajaran, LMS TKA, AI Guru, Nilai, Kursus, dan Data Kelas</p>
           </div>
           <div className="flex items-center gap-2">
