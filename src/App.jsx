@@ -1034,7 +1034,7 @@ function getNavIcon(label) {
 
 function SidebarMenu({ currentUser, onLogin, onLogout, onClose, mobile = false }) {
   return (
-    <div className={`${mobile ? "flex h-full" : "hidden lg:flex"} flex-col bg-slate-950 text-white`}>
+    <div className={`${mobile ? "flex h-full" : "hidden lg:flex h-full"} flex-col overflow-hidden bg-slate-950 text-white`}>
       <div className="border-b border-white/10 p-5">
         <a href="#beranda" onClick={onClose} className="flex items-center gap-3">
           <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-950/40">
@@ -1069,7 +1069,7 @@ function SidebarMenu({ currentUser, onLogin, onLogout, onClose, mobile = false }
         )}
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-4 py-5">
+      <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5 [scrollbar-width:thin] [scrollbar-color:#34d399_#020617]">
         <p className="mb-3 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-slate-400">Menu Aplikasi</p>
         <div className="grid gap-1.5">
           {navItems.map(([label, href]) => {
@@ -1091,7 +1091,7 @@ function SidebarMenu({ currentUser, onLogin, onLogout, onClose, mobile = false }
         </div>
       </nav>
 
-      <div className="border-t border-white/10 p-4">
+      <div className="flex-none border-t border-white/10 p-4">
         <div className="grid gap-2">
           <a href={DRIVE_URL} target="_blank" rel="noreferrer" onClick={onClose}>
             <Button variant="secondary" className="w-full justify-start bg-white text-slate-950 hover:bg-slate-100">
@@ -1149,7 +1149,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <aside className="fixed left-0 top-0 z-50 h-screen w-72 border-r border-slate-800 shadow-2xl shadow-slate-950/20">
+      <aside className="fixed left-0 top-0 z-50 h-screen w-72 overflow-hidden border-r border-slate-800 shadow-2xl shadow-slate-950/20">
         <SidebarMenu
           currentUser={currentUser}
           onLogin={() => setLoginOpen(true)}
