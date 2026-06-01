@@ -1456,6 +1456,12 @@ function App() {
           <p className="text-xs font-bold text-slate-500">La Ode Supriono, S.Pd., M.Pd. · UPT SPF SD Inpres Paccerakkang</p>
         </div>
       </footer>
+
+      <LoginModal
+        open={loginOpen}
+        onClose={() => setLoginOpen(false)}
+        onLogin={(user) => setCurrentUser(user)}
+      />
     </div>
   );
 }
