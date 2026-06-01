@@ -1048,52 +1048,77 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-          <a href="#beranda" className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-200">
-              <School className="h-7 w-7" />
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
+        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+          <a href="#beranda" className="flex min-w-0 flex-shrink-0 items-center gap-3">
+            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-200">
+              <School className="h-6 w-6" />
             </div>
-            <div>
-              <p className="text-base font-black leading-tight tracking-tight text-slate-950">RUANG BELAJAR PAK LA ODE</p>
-              <p className="text-xs font-bold text-slate-500">UPT SPF SD Inpres Paccerakkang</p>
+            <div className="min-w-0">
+              <p className="max-w-[280px] truncate text-sm font-black leading-tight tracking-tight text-slate-950 xl:text-base">
+                RUANG BELAJAR PAK LA ODE
+              </p>
+              <p className="max-w-[280px] truncate text-xs font-bold text-slate-500">
+                UPT SPF SD Inpres Paccerakkang
+              </p>
             </div>
           </a>
 
-          <nav className="hidden items-center gap-1 lg:flex">
-            {navItems.map(([label, href]) => (
-              <a key={label} href={href} className="rounded-xl px-4 py-2 text-sm font-extrabold text-slate-600 hover:bg-slate-100 hover:text-slate-950">
-                {label}
-              </a>
-            ))}
-          </nav>
+          <div className="hidden min-w-0 flex-1 items-center justify-end gap-3 xl:flex">
+            <nav className="flex min-w-0 items-center justify-end gap-1">
+              {navItems.map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  className="whitespace-nowrap rounded-xl px-2.5 py-2 text-xs font-extrabold text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 2xl:px-3 2xl:text-sm"
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
 
-          <div className="hidden items-center gap-3 lg:flex">
-            {currentUser && (
-              <div className="flex items-center gap-2 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-800 ring-1 ring-emerald-100">
-                <UserRound className="h-4 w-4" /> {currentUser.role}
-              </div>
-            )}
-            <a href={DRIVE_URL} target="_blank" rel="noreferrer"><Button variant="secondary"><FolderOpen className="h-4 w-4" /> Buka Drive</Button></a>
-            {currentUser ? (
-              <Button variant="dark" onClick={logout}><LogOut className="h-4 w-4" /> Keluar</Button>
-            ) : (
-              <Button onClick={() => setLoginOpen(true)}><LogIn className="h-4 w-4" /> Login</Button>
-            )}
+            <div className="flex flex-none items-center justify-end gap-2 border-l border-slate-200 pl-3">
+              {currentUser && (
+                <div className="flex items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2.5 text-xs font-black text-emerald-800 ring-1 ring-emerald-100 2xl:text-sm">
+                  <UserRound className="h-4 w-4" /> {currentUser.role}
+                </div>
+              )}
+              <a href={DRIVE_URL} target="_blank" rel="noreferrer">
+                <Button variant="secondary" className="px-4 py-2.5 text-xs 2xl:text-sm">
+                  <FolderOpen className="h-4 w-4" /> Buka Drive
+                </Button>
+              </a>
+              {currentUser ? (
+                <Button variant="dark" className="px-4 py-2.5 text-xs 2xl:text-sm" onClick={logout}>
+                  <LogOut className="h-4 w-4" /> Keluar
+                </Button>
+              ) : (
+                <Button className="px-4 py-2.5 text-xs 2xl:text-sm" onClick={() => setLoginOpen(true)}>
+                  <LogIn className="h-4 w-4" /> Login
+                </Button>
+              )}
+            </div>
           </div>
 
-          <button className="rounded-xl p-2 text-slate-700 hover:bg-slate-100 lg:hidden" onClick={() => setMenuOpen((v) => !v)}>
+          <button
+            className="ml-auto rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm hover:bg-slate-100 xl:hidden"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Buka menu"
+          >
             {menuOpen ? <X /> : <Menu />}
           </button>
         </div>
         {menuOpen && (
-          <div className="border-t border-slate-200 bg-white px-4 py-4 lg:hidden">
+          <div className="border-t border-slate-200 bg-white px-4 py-4 xl:hidden">
             <div className="mx-auto grid max-w-7xl gap-2">
               {navItems.map(([label, href]) => (
                 <a key={label} onClick={() => setMenuOpen(false)} href={href} className="rounded-xl px-4 py-3 text-sm font-extrabold text-slate-700 hover:bg-slate-100">
                   {label}
                 </a>
               ))}
+              <a href={DRIVE_URL} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
+                <Button variant="secondary" className="w-full"><FolderOpen className="h-4 w-4" /> Buka Drive</Button>
+              </a>
               {currentUser ? (
                 <Button variant="dark" onClick={() => { logout(); setMenuOpen(false); }}><LogOut className="h-4 w-4" /> Keluar dari {currentUser.role}</Button>
               ) : (
