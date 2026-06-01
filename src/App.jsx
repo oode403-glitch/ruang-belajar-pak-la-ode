@@ -85,6 +85,10 @@ const navItems = [
   ["Drive", "#drive"],
 ];
 
+// Dipakai khusus untuk header desktop agar menu benar-benar ringkas di sebelah kanan.
+// Menu Drive tidak ditampilkan dua kali karena sudah ada tombol Buka Drive.
+const desktopNavItems = navItems.filter(([label]) => label !== "Drive");
+
 const demoUsers = [
   {
     id: "ADM-001",
@@ -1012,6 +1016,103 @@ function ProtectedCard({ allowed, title, desc, onLoginClick }) {
   );
 }
 
+
+function getNavIcon(label) {
+  const map = {
+    Beranda: School,
+    Fitur: Sparkles,
+    Akses: ShieldCheck,
+    "LMS TKA": FileQuestion,
+    "AI Guru": Bot,
+    "Input Data": Database,
+    Nilai: BarChart3,
+    Kursus: GraduationCap,
+    Drive: FolderOpen,
+  };
+  return map[label] || CheckCircle2;
+}
+
+function SidebarMenu({ currentUser, onLogin, onLogout, onClose, mobile = false }) {
+  return (
+    <div className={`${mobile ? "flex h-full" : "hidden lg:flex"} flex-col bg-slate-950 text-white`}>
+      <div className="border-b border-white/10 p-5">
+        <a href="#beranda" onClick={onClose} className="flex items-center gap-3">
+          <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-950/40">
+            <School className="h-7 w-7" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-base font-black leading-tight tracking-tight text-white">RUANG BELAJAR PAK LA ODE</p>
+            <p className="mt-1 text-xs font-bold leading-5 text-emerald-200">UPT SPF SD Inpres Paccerakkang</p>
+          </div>
+        </a>
+      </div>
+
+      <div className="border-b border-white/10 p-5">
+        {currentUser ? (
+          <div className="rounded-3xl bg-white/10 p-4 ring-1 ring-white/10">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-400/20 text-emerald-200">
+                {React.createElement(getRoleIcon(currentUser.role), { className: "h-6 w-6" })}
+              </div>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-black text-white">{currentUser.nama}</p>
+                <p className="mt-0.5 text-xs font-bold text-emerald-200">{currentUser.role}</p>
+              </div>
+            </div>
+            <p className="mt-3 line-clamp-2 text-xs leading-5 text-slate-300">{currentUser.deskripsi}</p>
+          </div>
+        ) : (
+          <div className="rounded-3xl bg-white/10 p-4 ring-1 ring-white/10">
+            <p className="text-sm font-black text-white">Belum login</p>
+            <p className="mt-1 text-xs leading-5 text-slate-300">Masuk sebagai admin, siswa, orang tua, atau peserta kursus.</p>
+          </div>
+        )}
+      </div>
+
+      <nav className="flex-1 overflow-y-auto px-4 py-5">
+        <p className="mb-3 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-slate-400">Menu Aplikasi</p>
+        <div className="grid gap-1.5">
+          {navItems.map(([label, href]) => {
+            const Icon = getNavIcon(label);
+            return (
+              <a
+                key={label}
+                href={href}
+                onClick={onClose}
+                className="group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-extrabold text-slate-300 transition hover:bg-white/10 hover:text-white"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 text-emerald-200 ring-1 ring-white/10 transition group-hover:bg-emerald-500 group-hover:text-white">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span>{label}</span>
+              </a>
+            );
+          })}
+        </div>
+      </nav>
+
+      <div className="border-t border-white/10 p-4">
+        <div className="grid gap-2">
+          <a href={DRIVE_URL} target="_blank" rel="noreferrer" onClick={onClose}>
+            <Button variant="secondary" className="w-full justify-start bg-white text-slate-950 hover:bg-slate-100">
+              <FolderOpen className="h-4 w-4" /> Buka Drive
+            </Button>
+          </a>
+          {currentUser ? (
+            <Button variant="dark" className="w-full justify-start bg-red-600 hover:bg-red-700" onClick={() => { onLogout(); onClose?.(); }}>
+              <LogOut className="h-4 w-4" /> Keluar
+            </Button>
+          ) : (
+            <Button className="w-full justify-start" onClick={() => { onLogin(); onClose?.(); }}>
+              <LogIn className="h-4 w-4" /> Login
+            </Button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
@@ -1048,88 +1149,62 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-          <a href="#beranda" className="flex min-w-0 flex-shrink-0 items-center gap-3">
-            <div className="flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-emerald-600 text-white shadow-lg shadow-emerald-200">
-              <School className="h-6 w-6" />
-            </div>
-            <div className="min-w-0">
-              <p className="max-w-[280px] truncate text-sm font-black leading-tight tracking-tight text-slate-950 xl:text-base">
-                RUANG BELAJAR PAK LA ODE
-              </p>
-              <p className="max-w-[280px] truncate text-xs font-bold text-slate-500">
-                UPT SPF SD Inpres Paccerakkang
-              </p>
-            </div>
-          </a>
+      <aside className="fixed left-0 top-0 z-50 h-screen w-72 border-r border-slate-800 shadow-2xl shadow-slate-950/20">
+        <SidebarMenu
+          currentUser={currentUser}
+          onLogin={() => setLoginOpen(true)}
+          onLogout={logout}
+        />
+      </aside>
 
-          <div className="hidden min-w-0 flex-1 items-center justify-end gap-3 xl:flex">
-            <nav className="flex min-w-0 items-center justify-end gap-1">
-              {navItems.map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  className="whitespace-nowrap rounded-xl px-2.5 py-2 text-xs font-extrabold text-slate-600 transition hover:bg-slate-100 hover:text-slate-950 2xl:px-3 2xl:text-sm"
-                >
-                  {label}
-                </a>
-              ))}
-            </nav>
-
-            <div className="flex flex-none items-center justify-end gap-2 border-l border-slate-200 pl-3">
-              {currentUser && (
-                <div className="flex items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2.5 text-xs font-black text-emerald-800 ring-1 ring-emerald-100 2xl:text-sm">
-                  <UserRound className="h-4 w-4" /> {currentUser.role}
-                </div>
-              )}
-              <a href={DRIVE_URL} target="_blank" rel="noreferrer">
-                <Button variant="secondary" className="px-4 py-2.5 text-xs 2xl:text-sm">
-                  <FolderOpen className="h-4 w-4" /> Buka Drive
-                </Button>
-              </a>
-              {currentUser ? (
-                <Button variant="dark" className="px-4 py-2.5 text-xs 2xl:text-sm" onClick={logout}>
-                  <LogOut className="h-4 w-4" /> Keluar
-                </Button>
-              ) : (
-                <Button className="px-4 py-2.5 text-xs 2xl:text-sm" onClick={() => setLoginOpen(true)}>
-                  <LogIn className="h-4 w-4" /> Login
-                </Button>
-              )}
-            </div>
-          </div>
-
+      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl lg:ml-72">
+        <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <button
-            className="ml-auto rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm hover:bg-slate-100 xl:hidden"
+            className="rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm hover:bg-slate-100 lg:hidden"
             onClick={() => setMenuOpen((v) => !v)}
             aria-label="Buka menu"
           >
             {menuOpen ? <X /> : <Menu />}
           </button>
-        </div>
-        {menuOpen && (
-          <div className="border-t border-slate-200 bg-white px-4 py-4 xl:hidden">
-            <div className="mx-auto grid max-w-7xl gap-2">
-              {navItems.map(([label, href]) => (
-                <a key={label} onClick={() => setMenuOpen(false)} href={href} className="rounded-xl px-4 py-3 text-sm font-extrabold text-slate-700 hover:bg-slate-100">
-                  {label}
-                </a>
-              ))}
-              <a href={DRIVE_URL} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
-                <Button variant="secondary" className="w-full"><FolderOpen className="h-4 w-4" /> Buka Drive</Button>
-              </a>
-              {currentUser ? (
-                <Button variant="dark" onClick={() => { logout(); setMenuOpen(false); }}><LogOut className="h-4 w-4" /> Keluar dari {currentUser.role}</Button>
-              ) : (
-                <Button onClick={() => { setLoginOpen(true); setMenuOpen(false); }}><LogIn className="h-4 w-4" /> Login</Button>
-              )}
-            </div>
+          <div className="min-w-0 px-3">
+            <p className="truncate text-sm font-black text-slate-950 md:text-base">RUANG BELAJAR PAK LA ODE</p>
+            <p className="truncate text-xs font-bold text-slate-500">Portal Pembelajaran, LMS TKA, AI Guru, Nilai, Kursus, dan Data Kelas</p>
           </div>
-        )}
+          <div className="flex items-center gap-2">
+            {currentUser ? (
+              <div className="hidden items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2 text-xs font-black text-emerald-800 ring-1 ring-emerald-100 sm:flex">
+                <UserRound className="h-4 w-4" /> {currentUser.role}
+              </div>
+            ) : null}
+            {currentUser ? (
+              <Button variant="dark" className="hidden px-3.5 py-2.5 text-xs sm:inline-flex" onClick={logout}>
+                <LogOut className="h-4 w-4" /> Keluar
+              </Button>
+            ) : (
+              <Button className="hidden px-3.5 py-2.5 text-xs sm:inline-flex" onClick={() => setLoginOpen(true)}>
+                <LogIn className="h-4 w-4" /> Login
+              </Button>
+            )}
+          </div>
+        </div>
       </header>
 
-      <main>
+      {menuOpen && (
+        <div className="fixed inset-0 z-[80] lg:hidden">
+          <button className="absolute inset-0 bg-slate-950/60" onClick={() => setMenuOpen(false)} aria-label="Tutup menu" />
+          <div className="relative h-full w-80 max-w-[88vw] shadow-2xl">
+            <SidebarMenu
+              mobile
+              currentUser={currentUser}
+              onLogin={() => setLoginOpen(true)}
+              onLogout={logout}
+              onClose={() => setMenuOpen(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      <main className="lg:ml-72">
         <section id="beranda" className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-amber-50">
           <div className="absolute -left-24 top-24 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
           <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-amber-200/50 blur-3xl" />
@@ -1475,7 +1550,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="bg-white py-8">
+      <footer className="bg-white py-8 lg:ml-72">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center sm:px-6 md:flex-row md:text-left lg:px-8">
           <p className="text-sm font-black text-slate-950">© 2026 RUANG BELAJAR PAK LA ODE</p>
           <p className="text-xs font-bold text-slate-500">La Ode Supriono, S.Pd., M.Pd. · UPT SPF SD Inpres Paccerakkang</p>
