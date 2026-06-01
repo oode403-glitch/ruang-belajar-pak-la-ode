@@ -25,6 +25,12 @@ import {
   ListChecks,
   Loader2,
   LockKeyhole,
+  LogIn,
+  LogOut,
+  UserRound,
+  ShieldCheck,
+  Eye,
+  EyeOff,
   Menu,
   MessageCircle,
   PenLine,
@@ -70,6 +76,7 @@ const aiTypes = [
 const navItems = [
   ["Beranda", "#beranda"],
   ["Fitur", "#fitur"],
+  ["Akses", "#akses"],
   ["LMS TKA", "#lms-tka"],
   ["AI Guru", "#ai-guru"],
   ["Input Data", "#input"],
@@ -77,6 +84,109 @@ const navItems = [
   ["Kursus", "#kursus"],
   ["Drive", "#drive"],
 ];
+
+const demoUsers = [
+  {
+    id: "ADM-001",
+    nama: "La Ode Supriono, S.Pd., M.Pd.",
+    username: "admin",
+    password: "Admin@2026",
+    role: "Admin",
+    kelas: "Semua Kelas",
+    anak: "-",
+    deskripsi: "Akses penuh untuk mengelola LMS, data siswa, nilai, absensi, kursus, AI, dan Drive.",
+  },
+  {
+    id: "SIS-001",
+    nama: "Siswa Demo 1",
+    username: "siswa001",
+    password: "Siswa@001",
+    role: "Siswa",
+    kelas: "VI.C",
+    anak: "-",
+    deskripsi: "Akses materi, LMS TKA, bank soal, kuis, pengumuman, dan nilai pribadi.",
+  },
+  {
+    id: "SIS-002",
+    nama: "Siswa Demo 2",
+    username: "siswa002",
+    password: "Siswa@002",
+    role: "Siswa",
+    kelas: "VI.C",
+    anak: "-",
+    deskripsi: "Akses materi, LMS TKA, bank soal, kuis, pengumuman, dan nilai pribadi.",
+  },
+  {
+    id: "ORT-001",
+    nama: "Orang Tua Siswa Demo 1",
+    username: "ortu001",
+    password: "Ortu@001",
+    role: "Orang Tua",
+    kelas: "VI.C",
+    anak: "Siswa Demo 1",
+    deskripsi: "Akses pantauan nilai, absensi, catatan guru, dan pengumuman kelas.",
+  },
+  {
+    id: "ORT-002",
+    nama: "Orang Tua Siswa Demo 2",
+    username: "ortu002",
+    password: "Ortu@002",
+    role: "Orang Tua",
+    kelas: "VI.C",
+    anak: "Siswa Demo 2",
+    deskripsi: "Akses pantauan nilai, absensi, catatan guru, dan pengumuman kelas.",
+  },
+  {
+    id: "KRS-001",
+    nama: "Peserta Kursus Demo 1",
+    username: "kursus001",
+    password: "Kursus@001",
+    role: "Peserta Kursus",
+    kelas: "Umum",
+    anak: "-",
+    deskripsi: "Akses materi kursus Matematika, jadwal pertemuan, latihan, dan kuis kursus.",
+  },
+];
+
+const roleMenus = {
+  Admin: [
+    "Kelola data siswa",
+    "Input absensi dan nilai",
+    "Upload materi LMS TKA",
+    "Kelola bank soal dan kuis",
+    "Gunakan AI Asisten Guru",
+    "Atur materi kursus custom",
+    "Simpan data ke Google Sheets/Drive",
+  ],
+  Siswa: [
+    "Akses materi TKA Matematika",
+    "Akses materi TKA Bahasa Indonesia",
+    "Kerjakan kuis dan bank soal",
+    "Lihat tugas dan pengumuman",
+    "Pantau nilai pribadi",
+  ],
+  "Orang Tua": [
+    "Pantau nilai anak",
+    "Pantau absensi anak",
+    "Lihat catatan guru",
+    "Lihat pengumuman kelas",
+    "Ikuti perkembangan belajar anak",
+  ],
+  "Peserta Kursus": [
+    "Akses materi kursus Matematika",
+    "Lihat jadwal pertemuan",
+    "Kerjakan latihan dan kuis",
+    "Lihat evaluasi kursus",
+    "Akses sertifikat jika selesai",
+  ],
+};
+
+function getRoleIcon(role) {
+  if (role === "Admin") return ShieldCheck;
+  if (role === "Siswa") return GraduationCap;
+  if (role === "Orang Tua") return Users;
+  return BookOpen;
+}
 
 function saveLocal(key, data) {
   const old = JSON.parse(localStorage.getItem(key) || "[]");
@@ -701,8 +811,226 @@ function AiTeacherAssistant() {
   );
 }
 
+
+function LoginModal({ open, onClose, onLogin }) {
+  const [form, setForm] = useState({ username: "admin", password: "Admin@2026" });
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [quickRole, setQuickRole] = useState("Admin");
+
+  if (!open) return null;
+
+  function fillDemo(role) {
+    const user = demoUsers.find((item) => item.role === role) || demoUsers[0];
+    setQuickRole(role);
+    setForm({ username: user.username, password: user.password });
+    setError("");
+  }
+
+  function submit(e) {
+    e.preventDefault();
+    const user = demoUsers.find(
+      (item) => item.username.toLowerCase() === form.username.trim().toLowerCase() && item.password === form.password
+    );
+    if (!user) {
+      setError("Username atau password belum sesuai. Coba pilih akun demo di bawah.");
+      return;
+    }
+    const safeUser = { ...user };
+    delete safeUser.password;
+    localStorage.setItem("rbplo_current_user", JSON.stringify(safeUser));
+    onLogin(safeUser);
+    onClose();
+  }
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-2xl overflow-hidden rounded-[2rem] bg-white shadow-2xl">
+        <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 text-white">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-black ring-1 ring-white/20">
+                <LockKeyhole className="h-4 w-4" /> Login Multi-Role
+              </div>
+              <h3 className="mt-4 text-3xl font-black">Masuk RUANG BELAJAR PAK LA ODE</h3>
+              <p className="mt-2 text-sm leading-7 text-emerald-50">
+                Gunakan akun admin, siswa, orang tua, atau peserta kursus untuk melihat dashboard sesuai peran.
+              </p>
+            </div>
+            <button onClick={onClose} className="rounded-2xl bg-white/10 p-2 hover:bg-white/20" aria-label="Tutup login">
+              <X className="h-6 w-6" />
+            </button>
+          </div>
+        </div>
+
+        <div className="grid gap-6 p-6 lg:grid-cols-[1fr_0.9fr]">
+          <form onSubmit={submit} className="space-y-4">
+            <Field label="Username"><Input value={form.username} onChange={(e) => setForm((f) => ({ ...f, username: e.target.value }))} /></Field>
+            <Field label="Password">
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={form.password}
+                  onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 rounded-xl p-2 text-slate-500 hover:bg-slate-100"
+                  aria-label="Tampilkan password"
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </Field>
+            {error && <div className="rounded-2xl bg-red-50 px-4 py-3 text-sm font-bold text-red-700 ring-1 ring-red-100">{error}</div>}
+            <Button className="w-full"><LogIn className="h-5 w-5" /> Masuk</Button>
+            <p className="text-xs leading-6 text-slate-500">
+              Akun ini adalah login demo berbasis browser untuk tahap awal. Untuk data siswa asli, password sebaiknya nanti dihubungkan ke sistem login yang lebih aman.
+            </p>
+          </form>
+
+          <div className="rounded-[1.5rem] bg-slate-50 p-4 ring-1 ring-slate-200">
+            <p className="text-sm font-black text-slate-950">Pilih akun demo cepat</p>
+            <div className="mt-4 grid gap-2">
+              {["Admin", "Siswa", "Orang Tua", "Peserta Kursus"].map((role) => {
+                const Icon = getRoleIcon(role);
+                return (
+                  <button
+                    key={role}
+                    type="button"
+                    onClick={() => fillDemo(role)}
+                    className={`flex items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-black ring-1 transition ${
+                      quickRole === role ? "bg-emerald-600 text-white ring-emerald-600" : "bg-white text-slate-700 ring-slate-200 hover:bg-slate-100"
+                    }`}
+                  >
+                    <span className="flex items-center gap-3"><Icon className="h-5 w-5" /> {role}</span>
+                    <span className="text-xs opacity-80">Pakai</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AccessDashboard({ user, onLoginClick, onLogout }) {
+  const displayedUsers = demoUsers.map(({ password, ...rest }) => rest);
+  if (!user) {
+    return (
+      <section id="akses" className="bg-white py-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionTitle
+            icon={LockKeyhole}
+            label="Login Multi-Role"
+            title="Masuk sebagai admin, siswa, orang tua, atau peserta kursus"
+            desc="Setiap peran memiliki tampilan dashboard dan akses fitur yang berbeda agar website lebih rapi dan aman digunakan."
+          />
+          <div className="mt-12 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+            <Card className="bg-slate-950 text-white">
+              <LockKeyhole className="h-10 w-10 text-emerald-300" />
+              <h3 className="mt-5 text-2xl font-black">Silakan login untuk membuka dashboard</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-300">
+                Admin dapat mengelola data, sedangkan siswa/orang tua/peserta kursus melihat fitur sesuai kebutuhannya.
+              </p>
+              <Button className="mt-6" variant="secondary" onClick={onLoginClick}><LogIn className="h-5 w-5" /> Buka Login</Button>
+            </Card>
+            <Card>
+              <h3 className="text-2xl font-black text-slate-950">Akun Demo Awal</h3>
+              <div className="mt-5 overflow-hidden rounded-2xl ring-1 ring-slate-200">
+                <div className="grid grid-cols-4 bg-slate-100 px-4 py-3 text-xs font-black uppercase text-slate-500">
+                  <span>Role</span><span>Username</span><span>Password</span><span>Nama</span>
+                </div>
+                {demoUsers.map((item) => (
+                  <div key={item.id} className="grid grid-cols-4 gap-2 border-t border-slate-200 px-4 py-3 text-xs font-bold text-slate-700">
+                    <span>{item.role}</span><span>{item.username}</span><span>{item.password}</span><span>{item.nama}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const Icon = getRoleIcon(user.role);
+  const menus = roleMenus[user.role] || [];
+  return (
+    <section id="akses" className="bg-white py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionTitle
+          icon={Icon}
+          label={`Dashboard ${user.role}`}
+          title={`Selamat datang, ${user.nama}`}
+          desc="Website akan menampilkan fitur sesuai peran akun yang sedang login."
+        />
+        <div className="mt-12 grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+          <Card className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white">
+            <Icon className="h-12 w-12 text-amber-200" />
+            <h3 className="mt-5 text-3xl font-black">{user.role}</h3>
+            <div className="mt-5 space-y-3 text-sm font-bold text-emerald-50">
+              <p>ID Akun: {user.id}</p>
+              <p>Kelas: {user.kelas}</p>
+              {user.anak !== "-" && <p>Nama Anak: {user.anak}</p>}
+            </div>
+            <Button className="mt-6" variant="secondary" onClick={onLogout}><LogOut className="h-5 w-5" /> Keluar</Button>
+          </Card>
+          <Card>
+            <h3 className="text-2xl font-black text-slate-950">Hak Akses Akun</h3>
+            <p className="mt-2 text-sm leading-7 text-slate-600">{user.deskripsi}</p>
+            <div className="mt-6 grid gap-3 md:grid-cols-2">
+              {menus.map((item) => (
+                <div key={item} className="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-700 ring-1 ring-slate-200">
+                  <CheckCircle2 className="h-5 w-5 flex-none text-emerald-600" />
+                  {item}
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 rounded-2xl bg-amber-50 p-4 text-sm font-bold leading-7 text-amber-800 ring-1 ring-amber-100">
+              Login demo ini tersimpan di browser. Untuk penggunaan resmi dengan data asli siswa, akun dapat dipindahkan ke Google Sheets/Firebase agar lebih aman dan mudah dikelola.
+            </div>
+          </Card>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProtectedCard({ allowed, title, desc, onLoginClick }) {
+  if (allowed) return null;
+  return (
+    <Card className="bg-amber-50 ring-amber-100">
+      <LockKeyhole className="h-9 w-9 text-amber-700" />
+      <h3 className="mt-5 text-2xl font-black text-slate-950">{title}</h3>
+      <p className="mt-3 text-sm leading-7 text-slate-700">{desc}</p>
+      <Button className="mt-6" onClick={onLoginClick}><LogIn className="h-5 w-5" /> Login Sekarang</Button>
+    </Card>
+  );
+}
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("rbplo_current_user") || "null");
+    } catch {
+      return null;
+    }
+  });
+
+  const isAdmin = currentUser?.role === "Admin";
+  const canAccessLmsTka = Boolean(currentUser && ["Admin", "Siswa", "Peserta Kursus"].includes(currentUser.role));
+  const canAccessCourse = Boolean(currentUser && ["Admin", "Peserta Kursus"].includes(currentUser.role));
+
+  function logout() {
+    localStorage.removeItem("rbplo_current_user");
+    setCurrentUser(null);
+  }
 
   const featureCards = useMemo(
     () => [
@@ -741,8 +1069,17 @@ function App() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
+            {currentUser && (
+              <div className="flex items-center gap-2 rounded-2xl bg-emerald-50 px-4 py-3 text-sm font-black text-emerald-800 ring-1 ring-emerald-100">
+                <UserRound className="h-4 w-4" /> {currentUser.role}
+              </div>
+            )}
             <a href={DRIVE_URL} target="_blank" rel="noreferrer"><Button variant="secondary"><FolderOpen className="h-4 w-4" /> Buka Drive</Button></a>
-            <a href="#input"><Button><PlusCircle className="h-4 w-4" /> Input Data</Button></a>
+            {currentUser ? (
+              <Button variant="dark" onClick={logout}><LogOut className="h-4 w-4" /> Keluar</Button>
+            ) : (
+              <Button onClick={() => setLoginOpen(true)}><LogIn className="h-4 w-4" /> Login</Button>
+            )}
           </div>
 
           <button className="rounded-xl p-2 text-slate-700 hover:bg-slate-100 lg:hidden" onClick={() => setMenuOpen((v) => !v)}>
@@ -757,6 +1094,11 @@ function App() {
                   {label}
                 </a>
               ))}
+              {currentUser ? (
+                <Button variant="dark" onClick={() => { logout(); setMenuOpen(false); }}><LogOut className="h-4 w-4" /> Keluar dari {currentUser.role}</Button>
+              ) : (
+                <Button onClick={() => { setLoginOpen(true); setMenuOpen(false); }}><LogIn className="h-4 w-4" /> Login</Button>
+              )}
             </div>
           </div>
         )}
@@ -824,6 +1166,8 @@ function App() {
           </div>
         </section>
 
+        <AccessDashboard user={currentUser} onLoginClick={() => setLoginOpen(true)} onLogout={logout} />
+
         <section id="fitur" className="py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <SectionTitle
@@ -869,10 +1213,44 @@ function App() {
                 </Card>
               ))}
             </div>
-            <div className="mt-12 grid gap-8 lg:grid-cols-2">
-              <TkaMaterialForm />
-              <TkaQuizBankForm />
-            </div>
+            {canAccessLmsTka ? (
+              isAdmin ? (
+                <div className="mt-12 grid gap-8 lg:grid-cols-2">
+                  <TkaMaterialForm />
+                  <TkaQuizBankForm />
+                </div>
+              ) : (
+                <div className="mt-12 grid gap-6 lg:grid-cols-2">
+                  <Card className="bg-emerald-50 ring-emerald-100">
+                    <BookOpen className="h-9 w-9 text-emerald-700" />
+                    <h3 className="mt-5 text-2xl font-black text-slate-950">Mode Belajar Siswa</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-700">
+                      Akun {currentUser.role} dapat mengakses materi TKA, bank soal, kuis, dan pengumuman. Fitur upload materi hanya tersedia untuk Admin.
+                    </p>
+                  </Card>
+                  <Card>
+                    <ListChecks className="h-9 w-9 text-amber-700" />
+                    <h3 className="mt-5 text-2xl font-black text-slate-950">Aktivitas yang Tersedia</h3>
+                    <div className="mt-4 grid gap-3">
+                      {["Lihat materi PDF", "Buka link YouTube", "Kerjakan bank soal", "Ikuti kuis pemahaman"].map((item) => (
+                        <div key={item} className="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-700 ring-1 ring-slate-200">
+                          <CheckCircle2 className="h-5 w-5 text-emerald-600" /> {item}
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                </div>
+              )
+            ) : (
+              <div className="mt-12">
+                <ProtectedCard
+                  allowed={canAccessLmsTka}
+                  title="Login diperlukan untuk membuka LMS TKA"
+                  desc="Gunakan akun Admin, Siswa, atau Peserta Kursus untuk mengakses materi, bank soal, dan kuis TKA."
+                  onLoginClick={() => setLoginOpen(true)}
+                />
+              </div>
+            )}
           </div>
         </section>
 
@@ -885,7 +1263,16 @@ function App() {
               desc="Fitur ini membantu Bapak membuat Modul Ajar, LKPD, soal, kuis, latihan TKA, rubrik, remedial, pengayaan, dan catatan rapor langsung dari website."
             />
             <div className="mt-12">
-              <AiTeacherAssistant />
+              {isAdmin ? (
+                <AiTeacherAssistant />
+              ) : (
+                <ProtectedCard
+                  allowed={isAdmin}
+                  title="AI Asisten Guru khusus Admin"
+                  desc="Fitur generate Modul Ajar, LKPD, soal, dan kuis hanya dibuka untuk akun Admin/Guru agar hasil perangkat ajar tetap terkontrol."
+                  onLoginClick={() => setLoginOpen(true)}
+                />
+              )}
             </div>
           </div>
         </section>
@@ -898,9 +1285,10 @@ function App() {
               title="Data siswa bisa dimasukkan kapan saja"
               desc="Saat data tahun ajaran baru sudah tersedia, Bapak dapat memasukkan data siswa dari website atau langsung melalui Google Sheets."
             />
-            <div className="mt-12 grid gap-8 lg:grid-cols-2">
-              <StudentForm />
-              <div className="grid gap-6">
+            {isAdmin ? (
+              <div className="mt-12 grid gap-8 lg:grid-cols-2">
+                <StudentForm />
+                <div className="grid gap-6">
                 <Card>
                   <FileSpreadsheet className="h-9 w-9 text-emerald-700" />
                   <h3 className="mt-5 text-2xl font-black text-slate-950">Terhubung dengan Sheet</h3>
@@ -915,8 +1303,18 @@ function App() {
                     Website tidak menampilkan data pribadi siswa secara publik. Form input digunakan untuk admin/guru dan dapat disambungkan ke Apps Script.
                   </p>
                 </Card>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="mt-12">
+                <ProtectedCard
+                  allowed={isAdmin}
+                  title="Input data siswa hanya untuk Admin"
+                  desc="Silakan login sebagai Admin untuk menambah data siswa tahun ajaran baru dan menghubungkannya ke Google Sheets."
+                  onLoginClick={() => setLoginOpen(true)}
+                />
+              </div>
+            )}
           </div>
         </section>
 
@@ -937,7 +1335,16 @@ function App() {
               ))}
             </div>
             <div className="mt-12">
-              <GradeForm />
+              {isAdmin ? (
+                <GradeForm />
+              ) : (
+                <ProtectedCard
+                  allowed={isAdmin}
+                  title="Input nilai hanya untuk Admin"
+                  desc="Akun siswa dan orang tua nantinya hanya melihat nilai masing-masing, sedangkan input nilai dilakukan oleh Admin/Guru."
+                  onLoginClick={() => setLoginOpen(true)}
+                />
+              )}
             </div>
           </div>
         </section>
@@ -951,7 +1358,24 @@ function App() {
               desc="Bapak dapat menentukan topik, tujuan, aktivitas, latihan, dan link materi sesuai kebutuhan peserta kursus."
             />
             <div className="mt-12 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-              <CourseMeetingForm />
+              {isAdmin ? (
+                <CourseMeetingForm />
+              ) : canAccessCourse ? (
+                <Card className="bg-emerald-50 ring-emerald-100">
+                  <GraduationCap className="h-9 w-9 text-emerald-700" />
+                  <h3 className="mt-5 text-2xl font-black text-slate-950">Mode Peserta Kursus</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-700">
+                    Akun peserta kursus dapat melihat materi, jadwal, latihan, dan evaluasi. Pengaturan pertemuan hanya tersedia untuk Admin.
+                  </p>
+                </Card>
+              ) : (
+                <ProtectedCard
+                  allowed={canAccessCourse}
+                  title="Login diperlukan untuk membuka kursus"
+                  desc="Gunakan akun Admin atau Peserta Kursus untuk mengakses halaman kursus Matematika."
+                  onLoginClick={() => setLoginOpen(true)}
+                />
+              )}
               <div className="grid gap-6">
                 {[
                   ["Paket Dasar", "Konsep dasar, operasi hitung, pecahan, dan soal cerita sederhana.", Award],
