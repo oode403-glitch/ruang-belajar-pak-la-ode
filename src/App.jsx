@@ -232,17 +232,17 @@ function fileToBase64(file) {
 function Button({ children, variant = "primary", className = "", ...props }) {
   const styles = {
     primary:
-      "bg-emerald-600 text-white shadow-lg shadow-emerald-200 hover:bg-emerald-700 hover:-translate-y-0.5",
+      "bg-blue-700 text-white shadow-lg shadow-sky-200 hover:bg-blue-800 hover:-translate-y-0.5",
     secondary:
-      "bg-white text-slate-900 ring-1 ring-slate-200 shadow-sm hover:bg-slate-50 hover:-translate-y-0.5",
+      "bg-white text-slate-900 ring-1 ring-blue-100 shadow-sm hover:bg-blue-50 hover:-translate-y-0.5",
     dark:
-      "bg-slate-950 text-white shadow-lg shadow-slate-300 hover:bg-slate-800 hover:-translate-y-0.5",
+      "bg-[#06152F] text-white shadow-lg shadow-blue-200/40 hover:bg-[#09245A] hover:-translate-y-0.5",
     soft:
-      "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-100 hover:bg-emerald-100",
+      "bg-sky-50 text-blue-900 ring-1 ring-sky-100 hover:bg-sky-100",
   };
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-extrabold transition-all focus:outline-none focus:ring-4 focus:ring-emerald-100 ${styles[variant]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-extrabold transition-all focus:outline-none focus:ring-4 focus:ring-sky-100 ${styles[variant]} ${className}`}
       {...props}
     >
       {children}
@@ -257,11 +257,11 @@ function Card({ children, className = "" }) {
 function SectionTitle({ icon: Icon = Sparkles, label, title, desc }) {
   return (
     <div className="mx-auto max-w-3xl text-center">
-      <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-extrabold text-emerald-700 ring-1 ring-emerald-100">
+      <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-sky-50 px-4 py-2 text-sm font-extrabold text-blue-800 ring-1 ring-sky-100">
         <Icon className="h-4 w-4" />
         {label}
       </div>
-      <h2 className="text-3xl font-black tracking-tight text-slate-950 md:text-4xl">{title}</h2>
+      <h2 className="text-3xl font-black leading-tight tracking-tight text-[#06152F] md:text-4xl">{title}</h2>
       <p className="mt-4 text-base leading-8 text-slate-600 md:text-lg">{desc}</p>
     </div>
   );
@@ -279,7 +279,7 @@ function Field({ label, children }) {
 function Input(props) {
   return (
     <input
-      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-sky-100"
       {...props}
     />
   );
@@ -288,7 +288,7 @@ function Input(props) {
 function Select({ children, ...props }) {
   return (
     <select
-      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 outline-none transition focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+      className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-sky-100"
       {...props}
     >
       {children}
@@ -299,7 +299,7 @@ function Select({ children, ...props }) {
 function Textarea(props) {
   return (
     <textarea
-      className="min-h-28 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-100"
+      className="min-h-28 w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:bg-white focus:ring-4 focus:ring-sky-100"
       {...props}
     />
   );
@@ -310,7 +310,7 @@ function StatusAlert({ status }) {
   return (
     <div
       className={`mt-4 rounded-2xl px-4 py-3 text-sm font-bold ${
-        status.ok ? "bg-emerald-50 text-emerald-800 ring-1 ring-emerald-100" : "bg-amber-50 text-amber-800 ring-1 ring-amber-100"
+        status.ok ? "bg-sky-50 text-blue-900 ring-1 ring-sky-100" : "bg-sky-50 text-sky-900 ring-1 ring-sky-100"
       }`}
     >
       {status.message}
@@ -348,7 +348,7 @@ function StudentForm() {
   return (
     <Card>
       <div className="flex items-start gap-4">
-        <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 ring-1 ring-emerald-100">
+        <div className="rounded-2xl bg-sky-50 p-3 text-blue-800 ring-1 ring-sky-100">
           <UserPlus className="h-7 w-7" />
         </div>
         <div>
@@ -408,7 +408,7 @@ function GradeForm() {
   return (
     <Card>
       <div className="flex items-start gap-4">
-        <div className="rounded-2xl bg-amber-50 p-3 text-amber-700 ring-1 ring-amber-100">
+        <div className="rounded-2xl bg-sky-50 p-3 text-sky-800 ring-1 ring-sky-100">
           <BarChart3 className="h-7 w-7" />
         </div>
         <div>
@@ -554,7 +554,7 @@ function TkaMaterialForm() {
   return (
     <Card>
       <div className="flex items-start gap-4">
-        <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 ring-1 ring-emerald-100">
+        <div className="rounded-2xl bg-sky-50 p-3 text-blue-800 ring-1 ring-sky-100">
           <UploadCloud className="h-7 w-7" />
         </div>
         <div>
@@ -576,8 +576,8 @@ function TkaMaterialForm() {
         <div className="md:col-span-2"><Field label="Judul Materi"><Input value={form.judul} onChange={set("judul")} placeholder="Contoh: Strategi Menjawab Soal Cerita TKA Matematika" /></Field></div>
         <Field label="Deskripsi Materi"><Textarea value={form.deskripsi} onChange={set("deskripsi")} placeholder="Ringkasan isi materi dan tujuan belajar" /></Field>
         <Field label="Upload PDF Opsional">
-          <input type="file" accept="application/pdf" onChange={(e) => setFile(e.target.files?.[0] || null)} className="w-full rounded-2xl border border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-sm font-bold text-emerald-800" />
-          {file && <p className="mt-2 text-xs font-bold text-emerald-700">File dipilih: {file.name}</p>}
+          <input type="file" accept="application/pdf" onChange={(e) => setFile(e.target.files?.[0] || null)} className="w-full rounded-2xl border border-dashed border-sky-300 bg-sky-50 px-4 py-3 text-sm font-bold text-blue-900" />
+          {file && <p className="mt-2 text-xs font-bold text-blue-800">File dipilih: {file.name}</p>}
         </Field>
         <Field label="Link YouTube"><Input value={form.linkYoutube} onChange={set("linkYoutube")} placeholder="https://youtube.com/..." /></Field>
         <Field label="Link Google Drive/PDF"><Input value={form.linkDrive} onChange={set("linkDrive")} placeholder="https://drive.google.com/..." /></Field>
@@ -625,7 +625,7 @@ function TkaQuizBankForm() {
   return (
     <Card>
       <div className="flex items-start gap-4">
-        <div className="rounded-2xl bg-amber-50 p-3 text-amber-700 ring-1 ring-amber-100">
+        <div className="rounded-2xl bg-sky-50 p-3 text-sky-800 ring-1 ring-sky-100">
           <FileQuestion className="h-7 w-7" />
         </div>
         <div>
@@ -740,7 +740,7 @@ function AiTeacherAssistant() {
     <Card className="overflow-hidden">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex items-start gap-4">
-          <div className="rounded-2xl bg-emerald-50 p-3 text-emerald-700 ring-1 ring-emerald-100">
+          <div className="rounded-2xl bg-sky-50 p-3 text-blue-800 ring-1 ring-sky-100">
             <Bot className="h-8 w-8" />
           </div>
           <div>
@@ -750,7 +750,7 @@ function AiTeacherAssistant() {
             </p>
           </div>
         </div>
-        <div className="rounded-2xl bg-amber-50 px-4 py-3 text-sm font-bold leading-6 text-amber-800 ring-1 ring-amber-100">
+        <div className="rounded-2xl bg-sky-50 px-4 py-3 text-sm font-bold leading-6 text-sky-900 ring-1 ring-sky-100">
           API key aman di Netlify Function, tidak disimpan di browser siswa.
         </div>
       </div>
@@ -785,12 +785,12 @@ function AiTeacherAssistant() {
 
       <StatusAlert status={status} />
 
-      <div className="mt-8 rounded-[1.5rem] bg-slate-950 p-5 text-white">
+      <div className="mt-8 rounded-[1.5rem] bg-[#06152F] p-5 text-white">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-3">
-            <div className="rounded-2xl bg-white/10 p-3"><ActiveIcon className="h-6 w-6 text-emerald-300" /></div>
+            <div className="rounded-2xl bg-white/10 p-3"><ActiveIcon className="h-6 w-6 text-sky-300" /></div>
             <div>
-              <p className="text-sm font-black text-emerald-300">Hasil Generate AI</p>
+              <p className="text-sm font-black text-sky-300">Hasil Generate AI</p>
               <p className="text-xs text-slate-300">Salin, download TXT, atau simpan ke Google Sheets.</p>
             </div>
           </div>
@@ -804,7 +804,7 @@ function AiTeacherAssistant() {
           {result ? (
             <pre className="whitespace-pre-wrap break-words text-sm leading-7 font-sans">{result}</pre>
           ) : (
-            <div className="flex items-start gap-3 rounded-2xl bg-amber-50 p-4 text-amber-900 ring-1 ring-amber-100">
+            <div className="flex items-start gap-3 rounded-2xl bg-sky-50 p-4 text-sky-900 ring-1 ring-sky-100">
               <AlertTriangle className="mt-0.5 h-5 w-5 flex-none" />
               <p className="text-sm font-bold leading-6">Hasil AI akan muncul di sini setelah Bapak menekan tombol Generate.</p>
             </div>
@@ -848,16 +848,16 @@ function LoginModal({ open, onClose, onLogin }) {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 p-4 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#06152F]/70 p-4 backdrop-blur-sm">
       <div className="w-full max-w-2xl overflow-hidden rounded-[2rem] bg-white shadow-2xl">
-        <div className="bg-gradient-to-br from-emerald-600 to-emerald-800 p-6 text-white">
+        <div className="bg-gradient-to-br from-blue-700 to-blue-900 p-6 text-white">
           <div className="flex items-start justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-black ring-1 ring-white/20">
                 <LockKeyhole className="h-4 w-4" /> Login Multi-Role
               </div>
               <h3 className="mt-4 text-3xl font-black">Masuk RUANG BELAJAR PAK LA ODE</h3>
-              <p className="mt-2 text-sm leading-7 text-emerald-50">
+              <p className="mt-2 text-sm leading-7 text-sky-50">
                 Gunakan akun admin, siswa, orang tua, atau peserta kursus untuk melihat dashboard sesuai peran.
               </p>
             </div>
@@ -905,7 +905,7 @@ function LoginModal({ open, onClose, onLogin }) {
                     type="button"
                     onClick={() => fillDemo(role)}
                     className={`flex items-center justify-between rounded-2xl px-4 py-3 text-left text-sm font-black ring-1 transition ${
-                      quickRole === role ? "bg-emerald-600 text-white ring-emerald-600" : "bg-white text-slate-700 ring-slate-200 hover:bg-slate-100"
+                      quickRole === role ? "bg-blue-700 text-white ring-blue-700" : "bg-white text-slate-700 ring-slate-200 hover:bg-slate-100"
                     }`}
                   >
                     <span className="flex items-center gap-3"><Icon className="h-5 w-5" /> {role}</span>
@@ -934,8 +934,8 @@ function AccessDashboard({ user, onLoginClick, onLogout }) {
             desc="Setiap peran memiliki tampilan dashboard dan akses fitur yang berbeda agar website lebih rapi dan aman digunakan."
           />
           <div className="mt-12 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
-            <Card className="bg-slate-950 text-white">
-              <LockKeyhole className="h-10 w-10 text-emerald-300" />
+            <Card className="bg-[#06152F] text-white">
+              <LockKeyhole className="h-10 w-10 text-sky-300" />
               <h3 className="mt-5 text-2xl font-black">Silakan login untuk membuka dashboard</h3>
               <p className="mt-3 text-sm leading-7 text-slate-300">
                 Admin dapat mengelola data, sedangkan siswa/orang tua/peserta kursus melihat fitur sesuai kebutuhannya.
@@ -973,10 +973,10 @@ function AccessDashboard({ user, onLoginClick, onLogout }) {
           desc="Website akan menampilkan fitur sesuai peran akun yang sedang login."
         />
         <div className="mt-12 grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
-          <Card className="bg-gradient-to-br from-emerald-600 to-emerald-800 text-white">
-            <Icon className="h-12 w-12 text-amber-200" />
+          <Card className="bg-gradient-to-br from-blue-700 to-blue-900 text-white">
+            <Icon className="h-12 w-12 text-sky-200" />
             <h3 className="mt-5 text-3xl font-black">{user.role}</h3>
-            <div className="mt-5 space-y-3 text-sm font-bold text-emerald-50">
+            <div className="mt-5 space-y-3 text-sm font-bold text-sky-50">
               <p>ID Akun: {user.id}</p>
               <p>Kelas: {user.kelas}</p>
               {user.anak !== "-" && <p>Nama Anak: {user.anak}</p>}
@@ -989,12 +989,12 @@ function AccessDashboard({ user, onLoginClick, onLogout }) {
             <div className="mt-6 grid gap-3 md:grid-cols-2">
               {menus.map((item) => (
                 <div key={item} className="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-700 ring-1 ring-slate-200">
-                  <CheckCircle2 className="h-5 w-5 flex-none text-emerald-600" />
+                  <CheckCircle2 className="h-5 w-5 flex-none text-blue-700" />
                   {item}
                 </div>
               ))}
             </div>
-            <div className="mt-6 rounded-2xl bg-amber-50 p-4 text-sm font-bold leading-7 text-amber-800 ring-1 ring-amber-100">
+            <div className="mt-6 rounded-2xl bg-sky-50 p-4 text-sm font-bold leading-7 text-sky-900 ring-1 ring-sky-100">
               Login demo ini tersimpan di browser. Untuk penggunaan resmi dengan data asli siswa, akun dapat dipindahkan ke Google Sheets/Firebase agar lebih aman dan mudah dikelola.
             </div>
           </Card>
@@ -1007,8 +1007,8 @@ function AccessDashboard({ user, onLoginClick, onLogout }) {
 function ProtectedCard({ allowed, title, desc, onLoginClick }) {
   if (allowed) return null;
   return (
-    <Card className="bg-amber-50 ring-amber-100">
-      <LockKeyhole className="h-9 w-9 text-amber-700" />
+    <Card className="bg-sky-50 ring-sky-100">
+      <LockKeyhole className="h-9 w-9 text-sky-800" />
       <h3 className="mt-5 text-2xl font-black text-slate-950">{title}</h3>
       <p className="mt-3 text-sm leading-7 text-slate-700">{desc}</p>
       <Button className="mt-6" onClick={onLoginClick}><LogIn className="h-5 w-5" /> Login Sekarang</Button>
@@ -1034,44 +1034,44 @@ function getNavIcon(label) {
 
 function SidebarMenu({ currentUser, onLogin, onLogout, onClose, mobile = false }) {
   return (
-    <div className={`${mobile ? "flex h-full" : "hidden lg:flex h-full"} flex-col overflow-hidden bg-slate-950 text-white`}>
-      <div className="border-b border-white/10 p-5">
-        <a href="#beranda" onClick={onClose} className="flex items-center gap-3">
-          <div className="flex h-12 w-12 flex-none items-center justify-center rounded-2xl bg-emerald-500 text-white shadow-lg shadow-emerald-950/40">
+    <div className={`${mobile ? "flex h-full" : "hidden lg:flex h-full"} sidebar-professional flex-col overflow-hidden text-white`}>
+      <div className="border-b border-white/10 px-6 py-5">
+        <a href="#beranda" onClick={onClose} className="flex items-center gap-4">
+          <div className="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-sky-500 text-white shadow-lg shadow-blue-950/40">
             <School className="h-7 w-7" />
           </div>
           <div className="min-w-0">
             <p className="text-base font-black leading-tight tracking-tight text-white">RUANG BELAJAR PAK LA ODE</p>
-            <p className="mt-1 text-xs font-bold leading-5 text-emerald-200">UPT SPF SD Inpres Paccerakkang</p>
+            <p className="mt-1 text-xs font-bold leading-5 text-sky-200">UPT SPF SD Inpres Paccerakkang</p>
           </div>
         </a>
       </div>
 
-      <div className="border-b border-white/10 p-5">
+      <div className="border-b border-white/10 px-6 py-5">
         {currentUser ? (
           <div className="rounded-3xl bg-white/10 p-4 ring-1 ring-white/10">
             <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-400/20 text-emerald-200">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-sky-400/20 text-sky-200">
                 {React.createElement(getRoleIcon(currentUser.role), { className: "h-6 w-6" })}
               </div>
               <div className="min-w-0">
                 <p className="truncate text-sm font-black text-white">{currentUser.nama}</p>
-                <p className="mt-0.5 text-xs font-bold text-emerald-200">{currentUser.role}</p>
+                <p className="mt-0.5 text-xs font-bold text-sky-200">{currentUser.role}</p>
               </div>
             </div>
             <p className="mt-3 line-clamp-2 text-xs leading-5 text-slate-300">{currentUser.deskripsi}</p>
           </div>
         ) : (
-          <div className="rounded-3xl bg-white/10 p-4 ring-1 ring-white/10">
-            <p className="text-sm font-black text-white">Belum login</p>
-            <p className="mt-1 text-xs leading-5 text-slate-300">Masuk sebagai admin, siswa, orang tua, atau peserta kursus.</p>
+          <div className="rounded-3xl bg-white/10 p-5 ring-1 ring-white/10">
+            <p className="text-base font-black text-white">Belum login</p>
+            <p className="mt-2 text-sm leading-6 text-slate-300">Masuk sebagai admin, siswa, orang tua, atau peserta kursus.</p>
           </div>
         )}
       </div>
 
-      <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-5 [scrollbar-width:thin] [scrollbar-color:#34d399_#020617]">
-        <p className="mb-3 px-3 text-[11px] font-black uppercase tracking-[0.22em] text-slate-400">Menu Aplikasi</p>
-        <div className="grid gap-1.5">
+      <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 py-5 [scrollbar-width:thin] [scrollbar-color:#38bdf8_#06152F]">
+        <p className="mb-4 px-3 text-xs font-black uppercase tracking-[0.22em] text-sky-200/80">Menu Aplikasi</p>
+        <div className="grid gap-2">
           {navItems.map(([label, href]) => {
             const Icon = getNavIcon(label);
             return (
@@ -1079,9 +1079,9 @@ function SidebarMenu({ currentUser, onLogin, onLogout, onClose, mobile = false }
                 key={label}
                 href={href}
                 onClick={onClose}
-                className="group flex items-center gap-3 rounded-2xl px-3 py-3 text-sm font-extrabold text-slate-300 transition hover:bg-white/10 hover:text-white"
+                className="group flex items-center gap-4 rounded-2xl px-4 py-3.5 text-[15px] font-extrabold text-slate-200 transition hover:bg-white/10 hover:text-white"
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 text-emerald-200 ring-1 ring-white/10 transition group-hover:bg-emerald-500 group-hover:text-white">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/5 text-sky-200 ring-1 ring-white/10 transition group-hover:bg-blue-600 group-hover:text-white">
                   <Icon className="h-5 w-5" />
                 </span>
                 <span>{label}</span>
@@ -1091,7 +1091,7 @@ function SidebarMenu({ currentUser, onLogin, onLogout, onClose, mobile = false }
         </div>
       </nav>
 
-      <div className="flex-none border-t border-white/10 p-4">
+      <div className="flex-none border-t border-white/10 p-5">
         <div className="grid gap-2">
           <a href={DRIVE_URL} target="_blank" rel="noreferrer" onClick={onClose}>
             <Button variant="secondary" className="w-full justify-start bg-white text-slate-950 hover:bg-slate-100">
@@ -1149,7 +1149,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900">
-      <aside className="fixed left-0 top-0 z-50 h-screen w-72 overflow-hidden border-r border-slate-800 shadow-2xl shadow-slate-950/20">
+      <aside className="fixed left-0 top-0 z-50 h-screen w-80 overflow-hidden border-r border-slate-800 shadow-2xl shadow-slate-950/20">
         <SidebarMenu
           currentUser={currentUser}
           onLogin={() => setLoginOpen(true)}
@@ -1157,8 +1157,8 @@ function App() {
         />
       </aside>
 
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl lg:ml-72">
-        <div className="flex items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-40 border-b border-blue-100 bg-white/95 shadow-sm backdrop-blur-xl lg:ml-80">
+        <div className="flex min-h-[76px] items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
           <button
             className="rounded-xl border border-slate-200 bg-white p-2 text-slate-700 shadow-sm hover:bg-slate-100 lg:hidden"
             onClick={() => setMenuOpen((v) => !v)}
@@ -1168,15 +1168,15 @@ function App() {
           </button>
           <div className="min-w-0 px-3">
             <div className="max-w-[78vw] overflow-hidden sm:max-w-[58vw] lg:max-w-[46vw] xl:max-w-[54vw]">
-              <p className="marquee-welcome whitespace-nowrap text-sm font-black text-slate-950 md:text-base">
+              <p className="marquee-welcome whitespace-nowrap text-base font-black tracking-tight text-[#06152F] md:text-lg">
                 Selamat datang di ruang belajar digital Pak Guru La Ode
               </p>
             </div>
-            <p className="truncate text-xs font-bold text-slate-500">Portal Pembelajaran, LMS TKA, AI Guru, Nilai, Kursus, dan Data Kelas</p>
+            <p className="truncate text-sm font-extrabold text-slate-500">Portal Pembelajaran, LMS TKA, AI Guru, Nilai, Kursus, dan Data Kelas</p>
           </div>
           <div className="flex items-center gap-2">
             {currentUser ? (
-              <div className="hidden items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2 text-xs font-black text-emerald-800 ring-1 ring-emerald-100 sm:flex">
+              <div className="hidden items-center gap-2 rounded-2xl bg-sky-50 px-3 py-2 text-xs font-black text-blue-900 ring-1 ring-sky-100 sm:flex">
                 <UserRound className="h-4 w-4" /> {currentUser.role}
               </div>
             ) : null}
@@ -1195,7 +1195,7 @@ function App() {
 
       {menuOpen && (
         <div className="fixed inset-0 z-[80] lg:hidden">
-          <button className="absolute inset-0 bg-slate-950/60" onClick={() => setMenuOpen(false)} aria-label="Tutup menu" />
+          <button className="absolute inset-0 bg-[#06152F]/60" onClick={() => setMenuOpen(false)} aria-label="Tutup menu" />
           <div className="relative h-full w-80 max-w-[88vw] shadow-2xl">
             <SidebarMenu
               mobile
@@ -1208,17 +1208,17 @@ function App() {
         </div>
       )}
 
-      <main className="lg:ml-72">
-        <section id="beranda" className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-white to-amber-50">
-          <div className="absolute -left-24 top-24 h-72 w-72 rounded-full bg-emerald-200/40 blur-3xl" />
-          <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-amber-200/50 blur-3xl" />
+      <main className="lg:ml-80">
+        <section id="beranda" className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-white to-sky-50">
+          <div className="absolute -left-24 top-24 h-72 w-80 rounded-full bg-sky-200/40 blur-3xl" />
+          <div className="absolute -right-24 bottom-10 h-72 w-80 rounded-full bg-sky-200/50 blur-3xl" />
           <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
             <div className="flex flex-col justify-center">
-              <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-black text-emerald-700 shadow-sm ring-1 ring-emerald-100">
-                <Star className="h-4 w-4 fill-emerald-500 text-emerald-500" />
+              <div className="mb-6 inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-black text-blue-800 shadow-sm ring-1 ring-sky-100">
+                <Star className="h-4 w-4 fill-blue-600 text-blue-600" />
                 Portal Pembelajaran, Kursus, dan Data Kelas
               </div>
-              <h1 className="text-4xl font-black tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
+              <h1 className="text-4xl font-black leading-tight tracking-tight text-[#06152F] sm:text-5xl lg:text-6xl">
                 Website profesional untuk kelas, kursus Matematika, nilai, absensi, dan data siswa.
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
@@ -1239,14 +1239,14 @@ function App() {
             </div>
 
             <Card className="relative shadow-2xl shadow-slate-200">
-              <div className="rounded-[1.5rem] bg-slate-950 p-6 text-white">
+              <div className="rounded-[1.5rem] bg-[#06152F] p-6 text-white">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-bold text-emerald-300">Dashboard Admin</p>
+                    <p className="text-sm font-bold text-sky-300">Dashboard Admin</p>
                     <h3 className="mt-1 text-2xl font-black">RUANG BELAJAR PAK LA ODE</h3>
                     <p className="mt-2 text-sm leading-6 text-slate-300">Input data, kelola kursus, dan pantau rekap pembelajaran.</p>
                   </div>
-                  <LayoutDashboard className="h-10 w-10 text-amber-300" />
+                  <LayoutDashboard className="h-10 w-10 text-sky-300" />
                 </div>
                 <div className="mt-6 grid gap-3">
                   {[
@@ -1258,10 +1258,10 @@ function App() {
                   ].map(([a, b, Icon]) => (
                     <div key={a} className="flex items-center justify-between rounded-2xl bg-white/10 p-4 ring-1 ring-white/10">
                       <div className="flex items-center gap-3">
-                        <div className="rounded-xl bg-white/10 p-2"><Icon className="h-5 w-5 text-emerald-300" /></div>
+                        <div className="rounded-xl bg-white/10 p-2"><Icon className="h-5 w-5 text-sky-300" /></div>
                         <div><p className="text-sm font-black">{a}</p><p className="text-xs text-slate-300">{b}</p></div>
                       </div>
-                      <CheckCircle2 className="h-5 w-5 text-emerald-300" />
+                      <CheckCircle2 className="h-5 w-5 text-sky-300" />
                     </div>
                   ))}
                 </div>
@@ -1283,7 +1283,7 @@ function App() {
             <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {featureCards.map(([title, desc, Icon]) => (
                 <Card key={title} className="transition hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200">
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 ring-1 ring-emerald-100">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-50 text-blue-800 ring-1 ring-sky-100">
                     <Icon className="h-7 w-7" />
                   </div>
                   <h3 className="mt-6 text-xl font-black text-slate-950">{title}</h3>
@@ -1311,7 +1311,7 @@ function App() {
                 ["Kuis Pemahaman", "Uji pemahaman siswa setelah belajar.", ListChecks],
               ].map(([title, desc, Icon]) => (
                 <Card key={title} className="bg-slate-50">
-                  <Icon className="h-8 w-8 text-emerald-700" />
+                  <Icon className="h-8 w-8 text-blue-800" />
                   <h3 className="mt-4 text-lg font-black text-slate-950">{title}</h3>
                   <p className="mt-2 text-sm leading-6 text-slate-600">{desc}</p>
                 </Card>
@@ -1325,20 +1325,20 @@ function App() {
                 </div>
               ) : (
                 <div className="mt-12 grid gap-6 lg:grid-cols-2">
-                  <Card className="bg-emerald-50 ring-emerald-100">
-                    <BookOpen className="h-9 w-9 text-emerald-700" />
+                  <Card className="bg-sky-50 ring-sky-100">
+                    <BookOpen className="h-9 w-9 text-blue-800" />
                     <h3 className="mt-5 text-2xl font-black text-slate-950">Mode Belajar Siswa</h3>
                     <p className="mt-3 text-sm leading-7 text-slate-700">
                       Akun {currentUser.role} dapat mengakses materi TKA, bank soal, kuis, dan pengumuman. Fitur upload materi hanya tersedia untuk Admin.
                     </p>
                   </Card>
                   <Card>
-                    <ListChecks className="h-9 w-9 text-amber-700" />
+                    <ListChecks className="h-9 w-9 text-sky-800" />
                     <h3 className="mt-5 text-2xl font-black text-slate-950">Aktivitas yang Tersedia</h3>
                     <div className="mt-4 grid gap-3">
                       {["Lihat materi PDF", "Buka link YouTube", "Kerjakan bank soal", "Ikuti kuis pemahaman"].map((item) => (
                         <div key={item} className="flex items-center gap-3 rounded-2xl bg-slate-50 p-4 text-sm font-bold text-slate-700 ring-1 ring-slate-200">
-                          <CheckCircle2 className="h-5 w-5 text-emerald-600" /> {item}
+                          <CheckCircle2 className="h-5 w-5 text-blue-700" /> {item}
                         </div>
                       ))}
                     </div>
@@ -1394,14 +1394,14 @@ function App() {
                 <StudentForm />
                 <div className="grid gap-6">
                 <Card>
-                  <FileSpreadsheet className="h-9 w-9 text-emerald-700" />
+                  <FileSpreadsheet className="h-9 w-9 text-blue-800" />
                   <h3 className="mt-5 text-2xl font-black text-slate-950">Terhubung dengan Sheet</h3>
                   <p className="mt-3 text-sm leading-7 text-slate-600">
                     Template database berisi sheet <b>DATA_SISWA</b>, <b>ABSENSI</b>, <b>INPUT_NILAI</b>, <b>NILAI_MAPEL</b>, <b>NILAI_TKA</b>, <b>PERTEMUAN_KURSUS</b>, dan sheet pendukung lainnya.
                   </p>
                 </Card>
-                <Card className="bg-emerald-50 ring-emerald-100">
-                  <LockKeyhole className="h-9 w-9 text-emerald-700" />
+                <Card className="bg-sky-50 ring-sky-100">
+                  <LockKeyhole className="h-9 w-9 text-blue-800" />
                   <h3 className="mt-5 text-2xl font-black text-slate-950">Aman untuk Tahap Awal</h3>
                   <p className="mt-3 text-sm leading-7 text-slate-700">
                     Website tidak menampilkan data pribadi siswa secara publik. Form input digunakan untuk admin/guru dan dapat disambungkan ke Apps Script.
@@ -1433,7 +1433,7 @@ function App() {
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {[...subjects, ...tkaSubjects].map((s) => (
                 <div key={s} className="flex items-center gap-3 rounded-2xl bg-white p-4 text-sm font-black text-slate-700 shadow-sm ring-1 ring-slate-200">
-                  <CheckCircle2 className="h-5 w-5 flex-none text-emerald-600" />
+                  <CheckCircle2 className="h-5 w-5 flex-none text-blue-700" />
                   {s}
                 </div>
               ))}
@@ -1465,8 +1465,8 @@ function App() {
               {isAdmin ? (
                 <CourseMeetingForm />
               ) : canAccessCourse ? (
-                <Card className="bg-emerald-50 ring-emerald-100">
-                  <GraduationCap className="h-9 w-9 text-emerald-700" />
+                <Card className="bg-sky-50 ring-sky-100">
+                  <GraduationCap className="h-9 w-9 text-blue-800" />
                   <h3 className="mt-5 text-2xl font-black text-slate-950">Mode Peserta Kursus</h3>
                   <p className="mt-3 text-sm leading-7 text-slate-700">
                     Akun peserta kursus dapat melihat materi, jadwal, latihan, dan evaluasi. Pengaturan pertemuan hanya tersedia untuk Admin.
@@ -1488,7 +1488,7 @@ function App() {
                 ].map(([title, desc, Icon]) => (
                   <Card key={title}>
                     <div className="flex items-start gap-4">
-                      <div className="rounded-2xl bg-amber-50 p-3 text-amber-700 ring-1 ring-amber-100"><Icon className="h-7 w-7" /></div>
+                      <div className="rounded-2xl bg-sky-50 p-3 text-sky-800 ring-1 ring-sky-100"><Icon className="h-7 w-7" /></div>
                       <div>
                         <h3 className="text-xl font-black text-slate-950">{title}</h3>
                         <p className="mt-2 text-sm leading-7 text-slate-600">{desc}</p>
@@ -1503,7 +1503,7 @@ function App() {
 
         <section id="drive" className="py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8 rounded-[2rem] bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 text-white shadow-2xl shadow-emerald-200 md:p-12 lg:grid-cols-[1fr_0.9fr]">
+            <div className="grid gap-8 rounded-[2rem] bg-gradient-to-br from-blue-700 to-blue-900 p-8 text-white shadow-2xl shadow-sky-200 md:p-12 lg:grid-cols-[1fr_0.9fr]">
               <div>
                 <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-black ring-1 ring-white/20">
                   <Cloud className="h-4 w-4" />
@@ -1512,7 +1512,7 @@ function App() {
                 <h2 className="text-3xl font-black tracking-tight md:text-4xl">
                   Database dan file pembelajaran disiapkan agar terhubung dengan Drive Bapak
                 </h2>
-                <p className="mt-5 text-base leading-8 text-emerald-50">
+                <p className="mt-5 text-base leading-8 text-sky-50">
                   Folder utama menggunakan ID Drive Bapak. Template sheet sudah berisi struktur data siswa, absensi, nilai, TKA, kursus, materi, tugas, pengumuman, dan portofolio siswa.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -1535,7 +1535,7 @@ function App() {
                 ].map(([a, b]) => (
                   <div key={a} className="rounded-3xl bg-white/12 p-5 ring-1 ring-white/20">
                     <p className="font-black">{a}</p>
-                    <p className="mt-1 text-sm leading-6 text-emerald-50">{b}</p>
+                    <p className="mt-1 text-sm leading-6 text-sky-50">{b}</p>
                   </div>
                 ))}
               </div>
@@ -1543,9 +1543,9 @@ function App() {
           </div>
         </section>
 
-        <section className="bg-slate-950 py-16 text-white">
+        <section className="bg-[#06152F] py-16 text-white">
           <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-            <MessageCircle className="mx-auto h-10 w-10 text-emerald-300" />
+            <MessageCircle className="mx-auto h-10 w-10 text-sky-300" />
             <h2 className="mt-5 text-3xl font-black">RUANG BELAJAR PAK LA ODE</h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-300">
               Portal pembelajaran profesional untuk kelas, LMS TKA Matematika & Bahasa Indonesia, AI Asisten Guru, kursus Matematika, pengolahan nilai, absensi, data siswa, dan integrasi Google Drive.
@@ -1554,7 +1554,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="bg-white py-8 lg:ml-72">
+      <footer className="bg-white py-8 lg:ml-80">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center sm:px-6 md:flex-row md:text-left lg:px-8">
           <p className="text-sm font-black text-slate-950">© 2026 RUANG BELAJAR PAK LA ODE</p>
           <p className="text-xs font-bold text-slate-500">La Ode Supriono, S.Pd., M.Pd. · UPT SPF SD Inpres Paccerakkang</p>
